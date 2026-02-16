@@ -7,12 +7,14 @@ import ui.menu.settings.SettingsMenu.NumericStepperOption;
 
 class Options_Window extends SettingsCategory
 {
+	#if (!mobile && !mac)
 	var checkbox_darkMode:CheckboxOption;
+	#end
 	var stepper_fps:NumericStepperOption;
 
 	public override function init()
 	{
-		#if desktop
+		#if (!mobile && !mac)
 		checkbox_darkMode = new CheckboxOption(400, 600, {
 			name: LanguageManager.getTextString('settings_window_darkMode'),
 			description: LanguageManager.getTextString('settings_window_darkMode_description'),
@@ -58,7 +60,7 @@ class Options_Window extends SettingsCategory
 		add(checkbox_borderless);
 		#end
 
-		var checkbox_vsync = new CheckboxOption(400, 500, {
+		var checkbox_vsync = new CheckboxOption(400, #if mobile 400 #else 500 #end, {
 			name: LanguageManager.getTextString('settings_window_VSync'),
 			description: LanguageManager.getTextString('settings_window_VSync_description'),
 			callback: function(value:Bool)
@@ -71,7 +73,7 @@ class Options_Window extends SettingsCategory
 		list.push(checkbox_vsync);
 		add(checkbox_vsync);
 
-		#if desktop
+		#if (!mobile && !mac)
 		// Make sure this gets added last so it fits last in the group.
 		list.push(checkbox_darkMode);
 		add(checkbox_darkMode);

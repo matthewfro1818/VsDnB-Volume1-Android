@@ -8,7 +8,9 @@ import ui.menu.settings.SettingsMenu.SelectOption;
 class Options_UI extends SettingsCategory
 {
 	var checkbox_minimalUI:CheckboxOption;
+	#if !mobile
 	var checkbox_debugUI:CheckboxOption;
+	#end
 	var select_timerType:SelectOption;
 	var checkbox_warnings:CheckboxOption;
 
@@ -22,7 +24,7 @@ class Options_UI extends SettingsCategory
 				Preferences.minimalUI = value;
 				#if !mobile Main.fps.visible = value ? false : checkbox_debugUI.checked; #end
 
-				checkbox_debugUI.canInteract = !Preferences.minimalUI;
+				#if !mobile checkbox_debugUI.canInteract = !Preferences.minimalUI; #end
 				select_timerType.canInteract = !Preferences.minimalUI;
 				checkbox_warnings.canInteract = !Preferences.minimalUI;
 			}
@@ -46,7 +48,7 @@ class Options_UI extends SettingsCategory
 		add(checkbox_debugUI);
 		#end
 
-		select_timerType = new SelectOption(400, 500, {
+		select_timerType = new SelectOption(400, #if mobile 400 #else 500 #end, {
 			name: LanguageManager.getTextString('settings_ui_timerType'),
 			description: LanguageManager.getTextString('settings_ui_timerType_description'),
 			options: [
@@ -65,7 +67,7 @@ class Options_UI extends SettingsCategory
 		list.push(select_timerType);
 		add(select_timerType);
 
-		checkbox_warnings = new CheckboxOption(400, 600, {
+		checkbox_warnings = new CheckboxOption(400, #if mobile 500 #else 600 #end, {
 			name: LanguageManager.getTextString('settings_ui_warnings'),
 			description: LanguageManager.getTextString('settings_ui_warnings_description'),
 			callback: function(value:Bool)
