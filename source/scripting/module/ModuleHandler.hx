@@ -21,7 +21,7 @@ class ModuleHandler
         // Clear any modules currently in the cache.
         clearModules();
 
-        var moduleScriptClasses:Array<String> = ScriptedModule.listScriptClasses();
+        var moduleScriptClasses:Array<String> = [];
 
         for (moduleClass in moduleScriptClasses)
         {
